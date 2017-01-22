@@ -1,0 +1,1 @@
+(defun sumsquare (m n)   (agrange 0 '(lambda (sum x) (+ sum (* x x))) m n))

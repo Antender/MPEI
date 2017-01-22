@@ -1,0 +1,48 @@
+object MainForm: TMainForm
+  Left = 192
+  Top = 124
+  Width = 285
+  Height = 89
+  Caption = #1057#1083#1086#1074#1072#1088#1100
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = OnCreate
+  OnDestroy = OnDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object WordLabel: TLabel
+    Left = 8
+    Top = 8
+    Width = 31
+    Height = 13
+    Caption = #1057#1083#1086#1074#1086
+  end
+  object TranslationLabel: TLabel
+    Left = 136
+    Top = 8
+    Width = 44
+    Height = 13
+    Caption = #1055#1077#1088#1077#1074#1086#1076
+  end
+  object Word: TEdit
+    Left = 8
+    Top = 24
+    Width = 121
+    Height = 21
+    TabOrder = 0
+    OnChange = Translate
+  end
+  object Translation: TEdit
+    Left = 136
+    Top = 24
+    Width = 121
+    Height = 21
+    TabOrder = 1
+    OnExit = ChangeTranslation
+  end
+end

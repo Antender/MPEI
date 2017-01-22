@@ -1,0 +1,11 @@
+(defun @PRINTBLNK (list1 list2)
+  (setq rewindl list2)
+  (defun printblnk! (el sp)
+    (cond
+      ((null el) (TERPRI 1) T)
+      ((null sp) (spaces (car rewindl)) (write (car el)) (printblnk! (cdr el) (cdr rewindl)))
+      (T (spaces (car sp)) (write (car el)) (printblnk! (cdr el) (cdr sp)))
+    )
+  )
+  (printblnk! list1 list2)
+)

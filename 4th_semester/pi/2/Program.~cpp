@@ -1,0 +1,57 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Program.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TMainForm *MainForm;
+//---------------------------------------------------------------------------
+__fastcall TMainForm::TMainForm(TComponent* Owner)
+        : TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::OnCreate(TObject *Sender)
+{
+  translations = new Map();
+  std::FILE* fid = std::fopen("dict.txt","r");
+  char* buffer = new char[100];
+  char* buffer2 = new char[100];
+  while (!(std::feof)(fid)) {
+    std::fgets(buffer,100,fid);
+    std::fgets(buffer2,100,fid);
+    buffer[strlen(buffer)-1] = 0;
+    buffer2[strlen(buffer2)-1] = 0;
+    translations->insert((*new std::pair<std::string,std::string>((*new std::string(buffer)),(*new std::string(buffer2)))));
+    buffer[0]=0;
+    buffer2[0]=0;
+  }
+  std::fclose(fid);
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::OnDestroy(TObject *Sender)
+{
+  std::FILE* fid = std::fopen("dict.txt","w");
+  for(std::map<std::string, std::string>::iterator it = translations->begin();it!=(translations->end());++it)
+  {
+    std::fputs(it->first.c_str(),fid);
+    std::fputs("\n",fid);
+    std::fputs(it->second.c_str(),fid);
+    std::fputs("\n",fid);
+  }
+  std::fclose(fid);
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::Translate(TObject *Sender)
+{
+  std::map<std::string, std::string>::iterator it;
+  if ((it=(translations->find(*new std::string(MainForm->Word->Text.c_str()))))==(translations->end())) {
+    MainForm->Translation->Text = "";
+  } else {
+    MainForm->Translation->Text = (*new AnsiString(it->second.c_str()));
+  }
+}
+//---------------------------------------------------------------------------

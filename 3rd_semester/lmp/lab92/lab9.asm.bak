@@ -1,0 +1,67 @@
+.MODEL flat,stdcall
+INCLUDE "windows.inc"
+INCLUDE "kernel32.inc"
+
+.DATA
+
+inHandle  DD 0;
+outHandle DD 0;
+bufferStr DB 0 DUP (256) ;
+strLength DD 0;
+digits    DB "0123456789abcdef"
+
+.CODE
+
+invert PROC C USES ebx, ArgX:DWORD, ArgN:DWORD, ArgP:DWORD
+mov ebx, -1
+mov eax, ArgX
+mov ecx, ArgN
+mov edx, ArgP
+lea ecx, [ecx+edx-32]
+neg ecx
+shr ebx, cl
+mov ecx, -1
+xchg edx, ecx
+shl edx, cl
+and ebx, edx
+xor eax, ebx
+ret
+invert ENDP
+
+outputHex PROC C USES ebx,ArgH:DWORD
+mov edx, ArgH
+push 173
+addFourDigits:
+mov ebx, 0
+addChar:
+mov ecx, 4
+sub esp, 4
+mov eax, edx
+and eax, 15
+cmp eax, 10
+jl isDigit
+add eax, 11
+isDigit:
+add eax, 30
+shr edx, 4 
+shl ebx, 4
+add ebx, eax
+cmp ecx, 0
+jnz addChar
+mov [esp], ebx
+cmp edx, 1
+jnz addFourDigits
+INVOKE WriteConsole, outHandle, esp, 10, 0, 0
+add esp, 12
+ret
+outputHex ENDP
+
+stdInHandle EQU -10d
+stdOutHandle EQU -11d
+
+main:
+INVOKE GetStdHandle, stdOutHandle
+mov outHandle, eax
+INVOKE outputHex, 16
+INVOKE ExitProcess,0
+END main

@@ -1,0 +1,1 @@
+(defun fib! (first second current last)  (cond    ((= current last) (+ first second))    (T (fib! second (+ first second) (+ current 1) last))  ))(defun fib (n)   (cond     ((< n 2) 1)    ((= n 2) 2)    (T (fib! 1 2 3 n))  ))

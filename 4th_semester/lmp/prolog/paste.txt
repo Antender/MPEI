@@ -1,0 +1,1 @@
+findbigbooks([book("moron","vasya",3),book("life","vasya",3),book("death","vasya",3),book("xor","kolya",1),book("and","petya",4),book("not","kolya",5),book("sun","petya",3)],2,[])

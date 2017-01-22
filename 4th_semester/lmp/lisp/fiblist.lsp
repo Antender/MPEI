@@ -1,0 +1,1 @@
+(defun fiblist! (first second current last res)  (cond    ((= current last) (cons (+ first second) res))    (T (fiblist! second (+ first second) (+ current 1) last (cons (+ first second) res)))  ))(defun fiblist (n)  (cond    ((< n 2) '(1))    ((= n 2) '(1 2))    (T (append '(1 2) (reverse (fiblist! 1 2 3 n))))  ))

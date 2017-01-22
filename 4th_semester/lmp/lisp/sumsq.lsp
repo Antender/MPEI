@@ -1,0 +1,1 @@
+(defun sumsq! (start stop accum)  (    cond     ((< start stop)      (sumsq!        (+ start 1)        stop         (+ accum (* start start))      )    )    (T (+ accum (* start start)))  ))(defun sumsq (m n)  (sumsq! m n 0))
